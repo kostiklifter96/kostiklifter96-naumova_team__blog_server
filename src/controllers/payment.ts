@@ -1,52 +1,15 @@
-import cors from "cors";
-import "dotenv/config";
-import express from "express";
-import { Article } from "./dataBase/db.js";
-import { logger } from "./logger.js";
-import { isAutf } from "./middleware/isAuth.js";
+import { Request, Response } from "express";
+import { Article } from "../dataBase/db.js";
+import { logger } from "../logger.js";
 import {
     sendDB,
     sendErrorMessage,
-    sendHello,
     sendLinkPrivateGroup,
-} from "./nodemailer/nodemailer.js";
+} from "../nodemailer/nodemailer.js";
 
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.use(express.static("__dirname"));
-
-const PORT = process.env.PORT || 4999;
 const article = Article;
 
-app.post("/register", (req, res) => {
-    try {
-        if (!req.body) {
-            return res.status(400).json({ success: false });
-        }
-
-        article.create({
-            name: req.body.name.trim(),
-            email: req.body.email.trim(),
-            textarea: req.body.textarea.trim(),
-            uid: "",
-            amount: "",
-            paymentStatus: 0,
-        });
-
-        sendHello(req.body);
-        sendDB();
-
-        res.status(200).json({ success: true });
-    } catch (error) {
-        if (error instanceof Error) {
-            console.log(error.message);
-        }
-    }
-});
-
-app.post("/payment", isAutf, (req, res) => {
+export const payment = async (req: Request, res: Response) => {
     try {
         if (!req.body) {
             return res.status(400).json({ success: false });
@@ -71,8 +34,8 @@ app.post("/payment", isAutf, (req, res) => {
                     email: req.body.transaction.customer.email.trim(),
                 };
 
-                sendLinkPrivateGroup(body);
-                sendDB();
+                await sendLinkPrivateGroup(body);
+                await sendDB();
 
                 return res.status(200).json({ success: "Оплачено" });
             case "failed":
@@ -85,20 +48,20 @@ app.post("/payment", isAutf, (req, res) => {
                     paymentStatus: 0,
                 });
 
-                sendDB();
+                await sendDB();
 
                 return res.status(200).json({ success: "Не оплачено" });
             case "pending":
-                sendErrorMessage("pending");
+                await sendErrorMessage("pending");
                 return res.status(200).json({ success: "В ожидании" });
             case "expired":
-                sendErrorMessage("expired");
+                await sendErrorMessage("expired");
                 return res
                     .status(200)
                     .json({ success: "Истекло время ожидания" });
 
             default:
-                sendErrorMessage(JSON.stringify(req.body));
+                await sendErrorMessage(JSON.stringify(req.body));
                 logger.error(JSON.stringify(req.body));
 
                 return res.status(200).json({ success: false });
@@ -108,8 +71,4 @@ app.post("/payment", isAutf, (req, res) => {
             console.log(error.message);
         }
     }
-});
-
-app.listen(PORT, () => {
-    console.log("server start");
-});
+};

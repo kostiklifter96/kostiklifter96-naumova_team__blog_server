@@ -59,8 +59,8 @@ export class Article {
         }
 
         db.run(
-            "UPDATE clients SET  paymentStatus = ? WHERE id = ?",
-            data.paymentStatus,
+            "UPDATE clients SET  amount = ? WHERE id = ?",
+            data.amount,
             id,
             (err: Error) => {
                 if (err) return console.log(err);
@@ -69,15 +69,33 @@ export class Article {
     }
 }
 
-//! получение данных всех клиентов
+//! изменение данных всех клиентов
 // Article.all((err, clients) => {
-//     if (err) {
-//         res.status(500).send("error downloading article");
-//     }
+//     clients.map((el: INaumovaTeamClient) => {
+//         if (el.id) {
+//             Article.update(
+//                 el.id,
+//                 {
+//                     email: el.email,
+//                     amount: "6900",
+//                     paymentStatus: el.paymentStatus,
+//                     name: el.name,
+//                     textarea: el.textarea,
+//                     uid: el.uid,
+//                     id: el.id,
+//                 },
+//                 (err) => {
+//                     if (err) {
+//                         return console.log("error downloading article");
+//                     }
+//                 },
+//             );
+//         }
+//         return;
+//     });
 // });
 
 // ! изменение статуса оплаты
-// Article.update(0, { paymentStatus: 0 });
 
 // ! очистка базы данных
 // Article.all((err, clients) => {
@@ -88,13 +106,19 @@ export class Article {
 //     if (clients.length > 0) {
 //         clients.map((el: INaumovaTeamClient) => {
 //             if (el.id) {
-//                 Article.delete(el.id, (err) => {
-//                     if (err) {
-//                         return console.log("error downloading article");
-//                     }
-//                 });
+//         Article.delete(el.id, (err) => {
+//             if (err) {
+//                 return console.log("error downloading article");
 //             }
-//             return;
 //         });
+//     }
+//     return;
+// });
+//     }
+// });
+
+// Article.delete(0, (err) => {
+//     if (err) {
+//         return console.log("error downloading article");
 //     }
 // });

@@ -24,10 +24,10 @@ export const sendHello = async (message: { name: string; email: string }) => {
         html: `
         Здравствуйте, ${message.name}!<br><br>
         
-        Вы успешно зарегистрированы!<br><br>
+        Вы успешно зарегестрированы!<br><br>
         
         В ближайшее время мы с вами свяжемся!<br><br>
-        
+
         С уважением, служба поддержки Naumova_team!`,
     });
 
@@ -45,9 +45,12 @@ export const sendLinkPrivateGroup = async (message: {
         html: `
         Здравствуйте, ${message.name}!<br><br>
         
-        Благодарим за оплату!<br><br>
+        Вы успешно оплатили участие в фитнес-проекте Naumova_team!<br><br>
         
-        https://t.me/+Cef7tGtsbXA2YzM6
+        Пройдите по этой ссылке, чтобы вступить в общий чат:<br><br>
+
+        https://t.me/+KA5EtLi0wh9lMmNi 
+
         <br><br>
         
         С уважением, служба поддержки Naumova_team!`,
