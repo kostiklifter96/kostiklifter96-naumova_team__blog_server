@@ -117,7 +117,7 @@ export class Article {
 //     }
 // });
 
-// Article.delete(0, (err) => {
+// Article.delete('', (err) => {
 //     if (err) {
 //         return console.log("error downloading article");
 //     }

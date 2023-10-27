@@ -36,11 +36,11 @@ export const login = async (req: Request, res: Response) => {
         }
     } catch (error) {
         if (error instanceof Error) {
+            res.status(400).json({
+                success: false,
+                message: error.message,
+                logIn: false,
+            });
         }
-        res.status(400).json({
-            success: false,
-            message: "Something went wrong",
-            logIn: false,
-        });
     }
 };

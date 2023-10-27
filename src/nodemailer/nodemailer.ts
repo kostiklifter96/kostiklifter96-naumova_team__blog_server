@@ -34,6 +34,19 @@ export const sendHello = async (message: { name: string; email: string }) => {
     console.log("Message sent: %s", info.messageId);
 };
 
+export const sendEmailFromAdminMailer = async (message: {
+    text: string;
+    email: string;
+}) => {
+    const info = await transporter.sendMail({
+        to: message.email,
+        subject: `Naumova_team`,
+        html: `${message.text}`,
+    });
+
+    console.log("Message sent: %s", info.messageId);
+};
+
 export const sendLinkPrivateGroup = async (message: {
     name: string;
     email: string;
