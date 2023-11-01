@@ -18,7 +18,7 @@ const transporter = nodemailer.createTransport(
 
 export const sendHello = async (message: { name: string; email: string }) => {
     const info = await transporter.sendMail({
-        to: message.email,
+        to: message.email.toLowerCase(),
         subject: `Naumova_team`,
         // text: message.text,
         html: `
@@ -38,13 +38,19 @@ export const sendEmailFromAdminMailer = async (message: {
     text: string;
     email: string;
 }) => {
-    const info = await transporter.sendMail({
-        to: message.email,
-        subject: `Naumova_team`,
-        html: `${message.text}`,
-    });
-
-    console.log("Message sent: %s", info.messageId);
+    try {
+        const info = await transporter.sendMail({
+            to: message.email.toLowerCase(),
+            subject: `Naumova_team`,
+            html: `${message.text}<br><br>
+        Если вам пришло пустое сообщение, просьба написать про это на naumova_team@mail.ru
+        `,
+        });
+        console.log("Message sent: %s", info.messageId);
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
 };
 
 export const sendLinkPrivateGroup = async (message: {
@@ -52,7 +58,7 @@ export const sendLinkPrivateGroup = async (message: {
     email: string;
 }) => {
     const info = await transporter.sendMail({
-        to: message.email,
+        to: message.email.toLowerCase(),
         subject: `Naumova_team`,
         // text: message.text,
         html: `

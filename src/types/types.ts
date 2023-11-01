@@ -4,6 +4,7 @@ export interface INaumovaTeamClient {
     email: string;
     textarea: string;
     uid: string;
-    amount: string;
+    amount: number;
     paymentStatus: number;
+    textForMailer?: string;
 }

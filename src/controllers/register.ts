@@ -15,7 +15,7 @@ export const register = async (req: Request, res: Response) => {
             email: req.body.email.trim(),
             textarea: req.body.textarea.trim(),
             uid: "",
-            amount: "",
+            amount: 0,
             paymentStatus: 0,
         });
 
@@ -29,12 +29,3 @@ export const register = async (req: Request, res: Response) => {
         }
     }
 };
-
-// article.create({
-//     name: "",
-//     email: "",
-//     textarea: "",
-//     uid: "",
-//     amount: "",
-//     paymentStatus: 0,
-// });

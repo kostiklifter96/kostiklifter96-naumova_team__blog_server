@@ -4,8 +4,6 @@ import { Request, Response } from "express";
 export const login = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
-            console.log(true);
-
             const { login, password } = req.body;
 
             if (!login || !password) {
