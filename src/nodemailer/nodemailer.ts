@@ -68,7 +68,7 @@ export const sendLinkPrivateGroup = async (message: {
         
         Пройдите по этой ссылке, чтобы вступить в общий чат:<br><br>
 
-        https://t.me/+KA5EtLi0wh9lMmNi 
+        ${process.env.TG_GROUP_CHAT} 
 
         <br><br>
         

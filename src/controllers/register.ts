@@ -15,6 +15,7 @@ export const register = async (req: Request, res: Response) => {
             email: req.body.email.trim(),
             textarea: req.body.textarea.trim(),
             uid: "",
+            stream: 0,
             amount: 0,
             paymentStatus: 0,
         });

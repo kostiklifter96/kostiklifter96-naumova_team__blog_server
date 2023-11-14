@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import { Article } from "../dataBase/db.js";
-import { sendEmailFromAdminMailer } from "../nodemailer/nodemailer.js";
 import { INaumovaTeamClient } from "../types/types.js";
 
 const article = Article;
 
-export const createClient = async (req: Request, res: Response) => {
+export const updateClients = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
             console.log(req.body);
@@ -19,6 +18,7 @@ export const createClient = async (req: Request, res: Response) => {
             }
 
             const {
+                id,
                 name,
                 email,
                 textarea,
@@ -30,6 +30,7 @@ export const createClient = async (req: Request, res: Response) => {
             } = req.body as INaumovaTeamClient;
 
             if (
+                id ||
                 name ||
                 email ||
                 textarea ||
@@ -39,24 +40,31 @@ export const createClient = async (req: Request, res: Response) => {
                 paymentStatus ||
                 textForMailer
             ) {
-                await sendEmailFromAdminMailer({
-                    email: email,
-                    text: textForMailer || "",
-                });
+                if (typeof id === "number") {
+                    article.update(
+                        id,
+                        {
+                            name: name.trim(),
+                            email: email.toLowerCase().trim(),
+                            textarea: textarea.trim(),
+                            uid: uid.trim(),
+                            amount: amount,
+                            stream: stream,
+                            paymentStatus: paymentStatus,
+                        },
+                        (err) => {},
+                    );
 
-                article.create({
-                    name: name.trim(),
-                    email: email.toLowerCase().trim(),
-                    textarea: textarea.trim(),
-                    uid: uid.trim(),
-                    amount: amount,
-                    stream: stream,
-                    paymentStatus: paymentStatus,
-                });
+                    res.status(200).json({
+                        success: true,
+                        message: "Client update",
+                        statusSendEmail: true,
+                    });
+                }
 
                 res.status(200).json({
                     success: true,
-                    message: "Client created",
+                    message: "Client update",
                     statusSendEmail: true,
                 });
             } else {

@@ -9,6 +9,7 @@ import {
     payment,
     register,
     sendEmailFromAdminPanel,
+    updateClients,
 } from "./controllers/index.js";
 import { isAutf } from "./middleware/isAuth.js";
 
@@ -26,6 +27,7 @@ app.post("/sendEmail", sendEmailFromAdminPanel);
 app.post("/createClient", createClient);
 app.post("/payment", isAutf, payment);
 app.delete("/deleteClient", deleteClient);
+app.put("/updateClient", updateClients);
 
 app.listen(PORT, () => {
     console.log("server start");

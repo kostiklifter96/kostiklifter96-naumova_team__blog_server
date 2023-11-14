@@ -5,6 +5,7 @@ export interface INaumovaTeamClient {
     textarea: string;
     uid: string;
     amount: number;
+    stream: number;
     paymentStatus: number;
     textForMailer?: string;
 }
