@@ -73,7 +73,7 @@ export class Article {
 //     textarea: 89097033077",
 //     uid: "",
 //     amount: 6900,
-//     stream: 1,
+//     stream: ,
 //     paymentStatus: 1,
 // });
 

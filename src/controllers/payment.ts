@@ -25,7 +25,7 @@ export const payment = async (req: Request, res: Response) => {
                     email: req.body.transaction.customer.email.trim(),
                     textarea: "ОПЛАТА",
                     uid: req.body.transaction.uid,
-                    stream: 2,
+                    stream: 3,
                     amount: req.body.transaction.amount,
                     paymentStatus: 1,
                 });
@@ -43,9 +43,9 @@ export const payment = async (req: Request, res: Response) => {
                 article.create({
                     name: req.body.transaction.billing_address.first_name.trim(),
                     email: req.body.transaction.customer.email.trim(),
-                    textarea: "Не оплачено",
+                    textarea: "НЕ ОПЛАЧЕНО",
                     uid: req.body.transaction.uid,
-                    stream: 2,
+                    stream: 3,
                     amount: req.body.transaction.amount,
                     paymentStatus: 0,
                 });
