@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { Article } from "../dataBase/db.js";
+import { createClientFromDB } from "../dataBase/db.js";
 import { sendDB, sendHello } from "../nodemailer/nodemailer.js";
-
-const article = Article;
 
 export const register = async (req: Request, res: Response) => {
     try {
@@ -21,7 +19,7 @@ export const register = async (req: Request, res: Response) => {
                     textarea: req.body.textarea.trim(),
                 });
 
-                article.create({
+                createClientFromDB({
                     name: req.body.name.trim(),
                     email: req.body.email.trim(),
                     textarea: req.body.textarea.trim(),

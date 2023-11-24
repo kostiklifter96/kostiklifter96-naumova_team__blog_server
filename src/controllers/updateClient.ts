@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
-import { Article } from "../dataBase/db.js";
+import { updateClientFromDB } from "../dataBase/db.js";
 import { INaumovaTeamClient } from "../types/types.js";
-
-const article = Article;
 
 export const updateClients = async (req: Request, res: Response) => {
     try {
@@ -41,19 +39,16 @@ export const updateClients = async (req: Request, res: Response) => {
                 textForMailer
             ) {
                 if (typeof id === "number") {
-                    article.update(
+                    await updateClientFromDB({
                         id,
-                        {
-                            name: name.trim(),
-                            email: email.toLowerCase().trim(),
-                            textarea: textarea.trim(),
-                            uid: uid.trim(),
-                            amount: amount,
-                            stream: stream,
-                            paymentStatus: paymentStatus,
-                        },
-                        (err) => {},
-                    );
+                        name: name.trim(),
+                        email: email.toLowerCase().trim(),
+                        textarea: textarea.trim(),
+                        uid: uid.trim(),
+                        amount: amount,
+                        stream: stream,
+                        paymentStatus: paymentStatus,
+                    });
 
                     res.status(200).json({
                         success: true,

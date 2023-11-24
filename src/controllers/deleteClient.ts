@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { Article } from "../dataBase/db.js";
-
-const article = Article;
+import { deleteClientFromDB } from "../dataBase/db.js";
 
 export const deleteClient = async (req: Request, res: Response) => {
     try {
@@ -17,9 +15,7 @@ export const deleteClient = async (req: Request, res: Response) => {
             console.log(req.body);
 
             if (req.body.id) {
-                article.delete(req.body.id, () => {
-                    console.log("Client deleted");
-                });
+                deleteClientFromDB(req.body.id);
 
                 res.status(200).json({
                     success: true,

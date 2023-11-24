@@ -1,9 +1,7 @@
 import { Request, Response } from "express";
-import { Article } from "../dataBase/db.js";
+import { createClientFromDB, getClientFromDB } from "../dataBase/db.js";
 import { sendEmailFromAdminMailer } from "../nodemailer/nodemailer.js";
 import { INaumovaTeamClient } from "../types/types.js";
-
-const article = Article;
 
 export const createClient = async (req: Request, res: Response) => {
     try {
@@ -44,19 +42,23 @@ export const createClient = async (req: Request, res: Response) => {
                     text: textForMailer || "",
                 });
 
-                article.create({
-                    name: name.trim(),
-                    email: email.toLowerCase().trim(),
-                    textarea: textarea.trim(),
-                    uid: uid.trim(),
-                    amount: amount,
-                    stream: stream,
-                    paymentStatus: paymentStatus,
+                await createClientFromDB({
+                    name,
+                    email,
+                    textarea,
+                    uid,
+                    amount,
+                    stream,
+                    paymentStatus,
+                    textForMailer,
                 });
+
+                const client = await getClientFromDB(email);
 
                 res.status(200).json({
                     success: true,
                     message: "Client created",
+                    result: client,
                     statusSendEmail: true,
                 });
             } else {

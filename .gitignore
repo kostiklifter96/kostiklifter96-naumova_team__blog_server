@@ -14,6 +14,7 @@ naumova_team.sqlite
 # production
 /build
 
+
 # misc
 .DS_Store
 .env.local
@@ -24,3 +25,4 @@ naumova_team.sqlite
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+src/logs/example.log

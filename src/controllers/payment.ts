@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
-import { Article } from "../dataBase/db.js";
+import { createClientFromDB } from "../dataBase/db.js";
 import { logger } from "../logger.js";
 import {
     sendDB,
     sendErrorMessage,
     sendLinkPrivateGroup,
 } from "../nodemailer/nodemailer.js";
-
-const article = Article;
 
 export const payment = async (req: Request, res: Response) => {
     try {
@@ -20,7 +18,7 @@ export const payment = async (req: Request, res: Response) => {
 
         switch (req.body.transaction.status) {
             case "successful":
-                article.create({
+                createClientFromDB({
                     name: req.body.transaction.billing_address.first_name.trim(),
                     email: req.body.transaction.customer.email.trim(),
                     textarea: "ОПЛАТА",
@@ -40,7 +38,7 @@ export const payment = async (req: Request, res: Response) => {
 
                 return res.status(200).json({ success: "Оплачено" });
             case "failed":
-                article.create({
+                createClientFromDB({
                     name: req.body.transaction.billing_address.first_name.trim(),
                     email: req.body.transaction.customer.email.trim(),
                     textarea: "НЕ ОПЛАЧЕНО",
