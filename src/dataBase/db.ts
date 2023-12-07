@@ -33,8 +33,8 @@ export const getClientFromDB = async (email: string) => {
 
 export const createClientFromDB = async (newClient: INaumovaTeamClient) => {
     const result = await Client.create({
-        name: newClient.name,
-        email: newClient.email,
+        name: newClient.name.trim(),
+        email: newClient.email.trim(),
         textarea: newClient.textarea,
         uid: newClient.uid,
         amount: newClient.amount,

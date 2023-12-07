@@ -10,6 +10,7 @@
 naumova_team.sqlite
 # testing
 /coverage
+/src/logs/example.log
 
 # production
 /build
@@ -25,4 +26,4 @@ naumova_team.sqlite
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-src/logs/example.log
+
