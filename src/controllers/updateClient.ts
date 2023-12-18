@@ -5,8 +5,6 @@ import { INaumovaTeamClient } from "../types/types.js";
 export const updateClients = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
-            console.log(req.body);
-
             if (!req.body) {
                 return res.status(400).json({
                     success: false,

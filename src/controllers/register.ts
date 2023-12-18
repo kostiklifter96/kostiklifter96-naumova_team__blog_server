@@ -5,7 +5,6 @@ import { sendDB, sendHello } from "../nodemailer/nodemailer.js";
 export const register = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
-            console.log(req.body);
             if (!req.body) {
                 return res.status(400).json({ success: false });
             }
@@ -13,15 +12,9 @@ export const register = async (req: Request, res: Response) => {
             const { name, email, textarea } = req.body;
 
             if (name || email || textarea) {
-                console.log({
-                    name: req.body.name.trim(),
-                    email: req.body.email.trim(),
-                    textarea: req.body.textarea.trim(),
-                });
-
                 createClientFromDB({
                     name: req.body.name.trim(),
-                    email: req.body.email.trim(),
+                    email: req.body.email.toLowerCase().trim(),
                     textarea: req.body.textarea.trim(),
                     uid: "",
                     stream: 3,

@@ -20,7 +20,9 @@ export const payment = async (req: Request, res: Response) => {
             case "successful":
                 createClientFromDB({
                     name: req.body.transaction.billing_address.first_name.trim(),
-                    email: req.body.transaction.customer.email.trim(),
+                    email: req.body.transaction.customer.email
+                        .toLowerCase()
+                        .trim(),
                     textarea: "ОПЛАТА",
                     uid: req.body.transaction.uid,
                     stream: 3,
@@ -30,7 +32,9 @@ export const payment = async (req: Request, res: Response) => {
 
                 const body = {
                     name: req.body.transaction.billing_address.first_name.trim(),
-                    email: req.body.transaction.customer.email.trim(),
+                    email: req.body.transaction.customer.email
+                        .toLowerCase()
+                        .trim(),
                 };
 
                 await sendLinkPrivateGroup(body);
@@ -40,7 +44,9 @@ export const payment = async (req: Request, res: Response) => {
             case "failed":
                 createClientFromDB({
                     name: req.body.transaction.billing_address.first_name.trim(),
-                    email: req.body.transaction.customer.email.trim(),
+                    email: req.body.transaction.customer.email
+                        .toLowerCase()
+                        .trim(),
                     textarea: "НЕ ОПЛАЧЕНО",
                     uid: req.body.transaction.uid,
                     stream: 3,

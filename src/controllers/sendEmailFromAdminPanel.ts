@@ -5,8 +5,6 @@ import { sendEmailFromAdminMailer } from "../nodemailer/nodemailer.js";
 export const sendEmailFromAdminPanel = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
-            console.log(true);
-
             const { email, text } = req.body;
 
             if (!text || !email) {

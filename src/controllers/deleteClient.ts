@@ -12,8 +12,6 @@ export const deleteClient = async (req: Request, res: Response) => {
                 });
             }
 
-            console.log(req.body);
-
             if (req.body.id) {
                 deleteClientFromDB(req.body.id);
 

@@ -1,13 +1,11 @@
 import { Request, Response } from "express";
-import { createClientFromDB, getClientFromDB } from "../dataBase/db.js";
+import { createClientFromDB } from "../dataBase/db.js";
 import { sendEmailFromAdminMailer } from "../nodemailer/nodemailer.js";
 import { INaumovaTeamClient } from "../types/types.js";
 
 export const createClient = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
-            console.log(req.body);
-
             if (!req.body) {
                 return res.status(400).json({
                     success: false,
@@ -42,9 +40,9 @@ export const createClient = async (req: Request, res: Response) => {
                     text: textForMailer || "",
                 });
 
-                await createClientFromDB({
+                const client = await createClientFromDB({
                     name,
-                    email,
+                    email: email.toLowerCase().trim(),
                     textarea,
                     uid,
                     amount,
@@ -52,8 +50,6 @@ export const createClient = async (req: Request, res: Response) => {
                     paymentStatus,
                     textForMailer,
                 });
-
-                const client = await getClientFromDB(email);
 
                 res.status(200).json({
                     success: true,

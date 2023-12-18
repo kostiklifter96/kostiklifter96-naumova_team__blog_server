@@ -34,7 +34,7 @@ export const getClientFromDB = async (email: string) => {
 export const createClientFromDB = async (newClient: INaumovaTeamClient) => {
     const result = await Client.create({
         name: newClient.name.trim(),
-        email: newClient.email.trim(),
+        email: newClient.email.toLowerCase().trim(),
         textarea: newClient.textarea,
         uid: newClient.uid,
         amount: newClient.amount,
@@ -42,7 +42,7 @@ export const createClientFromDB = async (newClient: INaumovaTeamClient) => {
         paymentStatus: newClient.paymentStatus,
     });
 
-    console.log(result);
+    return result;
 };
 // createClientFromDB();
 
@@ -54,13 +54,12 @@ export const updateClientFromDB = async (updateInfo: INaumovaTeamClient) => {
         { where: { id: updateInfo.id } },
     );
 
-    console.log(result);
+    return result;
 };
 // updateClientFromDB();
 
 export const deleteClientFromDB = async (id: number) => {
     const result = await Client.destroy({ where: { id: id } });
-
-    console.log(result);
+    return result;
 };
 // deleteClientFromDB();
