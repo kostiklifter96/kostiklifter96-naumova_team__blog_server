@@ -1,4 +1,5 @@
 export { createClient } from "./createClient.js";
+export { createNewsletter } from "./createNewsletter.js";
 export { deleteClient } from "./deleteClient.js";
 export { getAllClients } from "./getAllClients.js";
 export { login } from "./login.js";

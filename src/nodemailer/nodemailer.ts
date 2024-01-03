@@ -104,25 +104,24 @@ export const sendErrorMessage = async (message: string) => {
     console.log("Message sent: %s", info.messageId);
 };
 
-export const sendInvite = async (message: { name: string; email: string }) => {
+export const sendNewsLetter = async (message: {
+    name: string;
+    email: string;
+    title: string;
+    text: string;
+}) => {
+    const newText = message.text.replace(
+        /ИМЯ_ПОЛЬЗОВАТЕЛЯ/g,
+        ` ${message.name} `,
+    );
     const info = await transporter.sendMail({
         to: message.email.toLowerCase(),
-        subject: `Naumova_team Новогодний интенсив!`,
+        subject: `Naumova_team: ${message.title}!`,
         // text: message.text,
-        html: `        
-        Привет, ${message.name}!<br><br>
-
-        За 39 BYN ты получишь 14 домашних тренировок!<br><br>
+        html: ` 
+        ${newText} <br><br>
         
-        Ты и так знаешь, что для закрепления результата необходимы регулярные тренировки и должное питание, поэтому приглашаю тебя продолжить тренировки со мной.<br><br>
-        
-        Старт через 2 дня!<br><br>
-        
-        Давай сожжем калории по максимуму к Новому году!<br><br>
-
-        Переходи на сайт https://naumova-team.by/ и регистрируйся!  <br><br>
-
-        С уважением, служба поддержки Naumova_team!`,
+        С уважением, команда Naumova_team!`,
     });
 
     console.log("Message sent: %s", info.messageId);

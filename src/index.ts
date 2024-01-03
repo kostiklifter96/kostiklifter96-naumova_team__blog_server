@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import {
     createClient,
+    createNewsletter,
     deleteClient,
     getAllClients,
     login,
@@ -25,6 +26,7 @@ app.post("/register", register);
 app.post("/login", login);
 app.post("/sendEmail", sendEmailFromAdminPanel);
 app.post("/createClient", createClient);
+app.post("/sendNewsLetter", createNewsletter);
 app.post("/payment", isAutf, payment);
 app.delete("/deleteClient", deleteClient);
 app.put("/updateClient", updateClients);
