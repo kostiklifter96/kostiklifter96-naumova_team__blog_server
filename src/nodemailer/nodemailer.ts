@@ -28,7 +28,7 @@ export const sendHello = async (message: { name: string; email: string }) => {
         
         В ближайшее время мы с вами свяжемся!<br><br>
 
-        С уважением, служба поддержки Naumova_team!`,
+        С уважением, команда Naumova_team!`,
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -72,7 +72,7 @@ export const sendLinkPrivateGroup = async (message: {
 
         <br><br>
         
-        С уважением, служба поддержки Naumova_team!`,
+        С уважением, команда Naumova_team!`,
     });
 
     console.log("Message sent: %s", info.messageId);

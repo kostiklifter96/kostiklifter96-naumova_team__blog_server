@@ -18,14 +18,14 @@ export const payment = async (req: Request, res: Response) => {
 
         switch (req.body.transaction.status) {
             case "successful":
-                createClientFromDB({
+                await createClientFromDB({
                     name: req.body.transaction.billing_address.first_name.trim(),
                     email: req.body.transaction.customer.email
                         .toLowerCase()
                         .trim(),
                     textarea: "ОПЛАТА",
                     uid: req.body.transaction.uid,
-                    stream: 3,
+                    stream: 4,
                     amount: req.body.transaction.amount,
                     paymentStatus: 1,
                 });
@@ -42,14 +42,14 @@ export const payment = async (req: Request, res: Response) => {
 
                 return res.status(200).json({ success: "Оплачено" });
             case "failed":
-                createClientFromDB({
+                await createClientFromDB({
                     name: req.body.transaction.billing_address.first_name.trim(),
                     email: req.body.transaction.customer.email
                         .toLowerCase()
                         .trim(),
                     textarea: "НЕ ОПЛАЧЕНО",
                     uid: req.body.transaction.uid,
-                    stream: 3,
+                    stream: 4,
                     amount: req.body.transaction.amount,
                     paymentStatus: 0,
                 });

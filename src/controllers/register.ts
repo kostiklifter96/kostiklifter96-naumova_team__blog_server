@@ -12,12 +12,12 @@ export const register = async (req: Request, res: Response) => {
             const { name, email, textarea } = req.body;
 
             if (name || email || textarea) {
-                createClientFromDB({
+                await createClientFromDB({
                     name: req.body.name.trim(),
                     email: req.body.email.toLowerCase().trim(),
-                    textarea: req.body.textarea.trim(),
+                    textarea: `Регистрация: ${req.body.textarea.trim()}`,
                     uid: "",
-                    stream: 3,
+                    stream: 0,
                     amount: 0,
                     paymentStatus: 0,
                 });
