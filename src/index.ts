@@ -2,6 +2,7 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import {
+    controlPayment,
     createClient,
     createNewsletter,
     deleteClient,
@@ -9,6 +10,7 @@ import {
     login,
     payment,
     register,
+    registrationClientOnStream,
     sendEmailFromAdminPanel,
     updateClients,
 } from "./controllers/index.js";
@@ -28,6 +30,8 @@ app.post("/sendEmail", sendEmailFromAdminPanel);
 app.post("/createClient", createClient);
 app.post("/sendNewsLetter", createNewsletter);
 app.post("/payment", isAutf, payment);
+app.post("/registration", registrationClientOnStream);
+app.post("/controlPayment", controlPayment);
 app.delete("/deleteClient", deleteClient);
 app.put("/updateClient", updateClients);
 

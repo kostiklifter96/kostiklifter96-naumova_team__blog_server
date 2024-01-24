@@ -1,30 +1,36 @@
-import "dotenv/config";
 import { Request, Response } from "express";
-import { deleteClientFromDB } from "../dataBase/db.js";
+import { changeClientFromDB } from "../dataBase/db.js";
 
-export const deleteClient = async (req: Request, res: Response) => {
+export const controlPayment = async (req: Request, res: Response) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
             if (!req.body) {
                 return res.status(400).json({
                     success: false,
-                    message: "Please enter ID",
+                    message: "Please fill the required fields",
                     statusSendEmail: false,
                 });
             }
 
-            if (req.body.id) {
-                deleteClientFromDB(req.body.id);
+            const { token, status } = req.body;
+
+            if (token || status) {
+                let paymentStatus = 0;
+                if (status === "successful") {
+                    paymentStatus = 1;
+                }
+
+                await changeClientFromDB(token, paymentStatus);
 
                 res.status(200).json({
                     success: true,
-                    message: "Client deleted",
+                    message: "update paymentStatus",
                     statusSendEmail: true,
                 });
             } else {
                 return res.status(400).json({
                     success: false,
-                    message: "Please fill the required fields",
+                    message: "Error",
                     statusSendEmail: false,
                 });
             }

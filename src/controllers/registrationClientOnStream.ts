@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { createClientFromDB } from "../dataBase/db.js";
-import { sendEmailFromAdminMailer } from "../nodemailer/nodemailer.js";
-import { INaumovaTeamClient } from "../types/types.js";
+import { INaumovaTeamClient } from "../types/types";
 
-export const createClient = async (req: Request, res: Response) => {
+export const registrationClientOnStream = async (
+    req: Request,
+    res: Response,
+) => {
     try {
         if (req.query.apikey === process.env.LOGIN_KEY) {
             if (!req.body) {
@@ -14,48 +16,26 @@ export const createClient = async (req: Request, res: Response) => {
                 });
             }
 
-            const {
-                name,
-                email,
-                textarea,
-                uid,
-                amount,
-                stream,
-                paymentStatus,
+            console.log(req.body);
 
-                textForMailer,
-                paymentToken,
-                telNumber,
-                telegram,
-            } = req.body as INaumovaTeamClient;
+            const { name, email, paymentToken, telNumber, telegram } =
+                req.body as INaumovaTeamClient;
 
-            if (
-                name ||
-                email ||
-                textarea ||
-                uid ||
-                amount ||
-                stream ||
-                paymentStatus ||
-                textForMailer
-            ) {
-                await sendEmailFromAdminMailer({
-                    email: email,
-                    text: textForMailer || "",
-                });
-
-                const client = await createClientFromDB({
+            if (name || email || paymentToken || telNumber || telegram) {
+                const clientData: INaumovaTeamClient = {
                     name,
                     email: email.toLowerCase().trim(),
-                    textarea,
-                    uid,
-                    amount,
-                    stream,
-                    paymentStatus,
                     paymentToken,
                     telNumber,
                     telegram,
-                });
+                    textarea: "",
+                    uid: "",
+                    amount: 5900,
+                    stream: 4,
+                    paymentStatus: 0,
+                };
+
+                const client = await createClientFromDB(clientData);
 
                 res.status(200).json({
                     success: true,

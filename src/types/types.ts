@@ -7,5 +7,8 @@ export interface INaumovaTeamClient {
     amount: number;
     stream: number;
     paymentStatus: number;
+    telNumber: string;
+    paymentToken: string;
+    telegram: string;
     textForMailer?: string;
 }

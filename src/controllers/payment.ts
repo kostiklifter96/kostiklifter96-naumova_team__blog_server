@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Request, Response } from "express";
 import { createClientFromDB } from "../dataBase/db.js";
 import { logger } from "../logger.js";
@@ -28,6 +29,9 @@ export const payment = async (req: Request, res: Response) => {
                     stream: 4,
                     amount: req.body.transaction.amount,
                     paymentStatus: 1,
+                    paymentToken: "",
+                    telegram: "",
+                    telNumber: "",
                 });
 
                 const body = {
@@ -52,6 +56,9 @@ export const payment = async (req: Request, res: Response) => {
                     stream: 4,
                     amount: req.body.transaction.amount,
                     paymentStatus: 0,
+                    paymentToken: "",
+                    telegram: "",
+                    telNumber: "",
                 });
 
                 await sendDB();

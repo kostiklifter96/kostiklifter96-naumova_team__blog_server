@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Request, Response } from "express";
 import { createClientFromDB } from "../dataBase/db.js";
 import { sendDB, sendHello } from "../nodemailer/nodemailer.js";
@@ -20,6 +21,9 @@ export const register = async (req: Request, res: Response) => {
                     stream: 0,
                     amount: 0,
                     paymentStatus: 0,
+                    paymentToken: "",
+                    telegram: "",
+                    telNumber: "",
                 });
 
                 await sendHello(req.body);

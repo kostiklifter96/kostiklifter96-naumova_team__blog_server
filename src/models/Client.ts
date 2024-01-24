@@ -21,7 +21,6 @@ export const Client = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-
         textarea: {
             type: DataTypes.STRING,
         },
@@ -42,19 +41,33 @@ export const Client = sequelize.define(
                 isIn: [[0, 1]],
             },
         },
+        telegram: {
+            type: DataTypes.STRING,
+        },
+        telNumber: {
+            type: DataTypes.STRING,
+        },
+        paymentToken: {
+            type: DataTypes.STRING,
+        },
     },
     {
         timestamps: false,
         tableName: "clients",
     },
 );
+// (async () => {
+//     try {
+//         // Синхронизируем модель с базой данных
+//         await sequelize.sync();
 
-const controlConnectedToDB = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log("Connection has been established successfully.");
-    } catch (error) {
-        console.error("Unable to connect to the database:", error);
-    }
-};
-// controlConnectedToDB();
+//         // Переименовываем столбец lastName в новый столбец newLastName
+//         await sequelize
+//             .getQueryInterface()
+//             .renameColumn("clients", "instagram", "telegram");
+
+//         console.log("Столбец успешно переименован.");
+//     } catch (error) {
+//         console.error("Ошибка при переименовании столбца:", error);
+//     }
+// })();

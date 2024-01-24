@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Request, Response } from "express";
 import { updateClientFromDB } from "../dataBase/db.js";
 import { INaumovaTeamClient } from "../types/types.js";
@@ -23,6 +24,9 @@ export const updateClients = async (req: Request, res: Response) => {
                 stream,
                 paymentStatus,
                 textForMailer,
+                paymentToken,
+                telegram,
+                telNumber,
             } = req.body as INaumovaTeamClient;
 
             if (
@@ -46,6 +50,9 @@ export const updateClients = async (req: Request, res: Response) => {
                         amount: amount,
                         stream: stream,
                         paymentStatus: paymentStatus,
+                        paymentToken,
+                        telegram,
+                        telNumber,
                     });
 
                     res.status(200).json({
