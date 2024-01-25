@@ -1,5 +1,7 @@
+import "dotenv/config";
 import { Request, Response } from "express";
 import { createClientFromDB } from "../dataBase/db.js";
+import { sendDB } from "../nodemailer/nodemailer.js";
 import { INaumovaTeamClient } from "../types/types";
 
 export const registrationClientOnStream = async (
@@ -31,11 +33,13 @@ export const registrationClientOnStream = async (
                     textarea: "",
                     uid: "",
                     amount: 5900,
-                    stream: 4,
+                    stream: +process.env.STREAM_NUMBER!,
                     paymentStatus: 0,
                 };
 
                 const client = await createClientFromDB(clientData);
+
+                await sendDB();
 
                 res.status(200).json({
                     success: true,

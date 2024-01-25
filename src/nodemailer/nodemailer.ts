@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport(
 export const sendHello = async (message: { name: string; email: string }) => {
     const info = await transporter.sendMail({
         to: message.email.toLowerCase(),
-        subject: `Naumova_team`,
+        subject: `Naumova Team`,
         // text: message.text,
         html: `
         Здравствуйте, ${message.name}!<br><br>
@@ -28,7 +28,7 @@ export const sendHello = async (message: { name: string; email: string }) => {
         
         В ближайшее время мы с вами свяжемся!<br><br>
 
-        С уважением, команда Naumova_team!`,
+        С уважением, команда Naumova Team!`,
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -41,12 +41,15 @@ export const sendEmailFromAdminMailer = async (message: {
     try {
         const info = await transporter.sendMail({
             to: message.email.toLowerCase(),
-            subject: `Naumova_team`,
+            subject: `Naumova Team`,
             html: `${message.text}<br><br>
         Если вам пришло пустое сообщение, просьба написать про это на naumova_team@mail.ru
         `,
         });
-        console.log("Message sent: %s", info.messageId);
+        console.log(
+            "Message sent sendEmailFromAdminMailer: %s",
+            info.messageId,
+        );
     } catch (error) {
         console.log(error);
         return error;
@@ -59,12 +62,12 @@ export const sendLinkPrivateGroup = async (message: {
 }) => {
     const info = await transporter.sendMail({
         to: message.email.toLowerCase(),
-        subject: `Naumova_team`,
+        subject: `Naumova Team`,
         // text: message.text,
         html: `
         Здравствуйте, ${message.name}!<br><br>
         
-        Вы успешно оплатили участие в фитнес-проекте Naumova_team!<br><br>
+        Вы успешно оплатили участие в фитнес-проекте Naumova Team!<br><br>
         
         Пройдите по этой ссылке, чтобы вступить в общий чат:<br><br>
 
@@ -72,10 +75,10 @@ export const sendLinkPrivateGroup = async (message: {
 
         <br><br>
         
-        С уважением, команда Naumova_team!`,
+        С уважением, команда Naumova Team!`,
     });
 
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent sendLinkPrivateGroup: %s", info.messageId);
 };
 
 export const sendDB = async () => {
@@ -87,7 +90,7 @@ export const sendDB = async () => {
         attachments: [{ path: "./naumova_team.sqlite" }],
     });
 
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent sendDB: %s", info.messageId);
 };
 
 export const sendErrorMessage = async (message: string) => {
@@ -101,7 +104,7 @@ export const sendErrorMessage = async (message: string) => {
         `,
     });
 
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent sendDB: %s", info.messageId);
 };
 
 export const sendNewsLetter = async (message: {
@@ -116,13 +119,13 @@ export const sendNewsLetter = async (message: {
     );
     const info = await transporter.sendMail({
         to: message.email.toLowerCase(),
-        subject: `Naumova_team: ${message.title}!`,
+        subject: `Naumova Team: ${message.title}!`,
         // text: message.text,
         html: ` 
         ${newText} <br><br>
         
-        С уважением, команда Naumova_team!`,
+        С уважением, команда Naumova Team!`,
     });
 
-    console.log("Message sent: %s", info.messageId);
+    console.log("Message sent sendNewsLetter: %s", info.messageId);
 };

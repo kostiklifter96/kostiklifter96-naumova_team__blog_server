@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { changeClientFromDB } from "../dataBase/db.js";
+import { sendDB } from "../nodemailer/nodemailer.js";
 
 export const controlPayment = async (req: Request, res: Response) => {
     try {
@@ -21,6 +22,7 @@ export const controlPayment = async (req: Request, res: Response) => {
                 }
 
                 await changeClientFromDB(token, paymentStatus);
+                await sendDB();
 
                 res.status(200).json({
                     success: true,

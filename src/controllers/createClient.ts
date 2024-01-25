@@ -22,7 +22,6 @@ export const createClient = async (req: Request, res: Response) => {
                 amount,
                 stream,
                 paymentStatus,
-
                 textForMailer,
                 paymentToken,
                 telNumber,
@@ -37,6 +36,9 @@ export const createClient = async (req: Request, res: Response) => {
                 amount ||
                 stream ||
                 paymentStatus ||
+                paymentToken ||
+                telNumber ||
+                telegram ||
                 textForMailer
             ) {
                 await sendEmailFromAdminMailer({

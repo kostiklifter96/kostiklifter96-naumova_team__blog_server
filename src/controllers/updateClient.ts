@@ -38,6 +38,9 @@ export const updateClients = async (req: Request, res: Response) => {
                 amount ||
                 stream ||
                 paymentStatus ||
+                paymentToken ||
+                telNumber ||
+                telegram ||
                 textForMailer
             ) {
                 if (typeof id === "number") {
