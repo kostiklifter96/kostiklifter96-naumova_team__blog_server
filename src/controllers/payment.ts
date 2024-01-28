@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { Request, Response } from "express";
-import { logger } from "../logger.js";
 import { sendErrorMessage } from "../nodemailer/nodemailer.js";
 
 export const payment = async (req: Request, res: Response) => {
@@ -8,9 +7,6 @@ export const payment = async (req: Request, res: Response) => {
         if (!req.body) {
             return res.status(400).json({ success: false });
         }
-
-        logger.log("debug", req);
-        logger.error(req);
 
         switch (req.body.transaction.status) {
             case "successful":
@@ -70,7 +66,6 @@ export const payment = async (req: Request, res: Response) => {
 
             default:
                 await sendErrorMessage(JSON.stringify(req.body));
-                logger.error(JSON.stringify(req.body));
 
                 return res.status(200).json({ success: false });
         }

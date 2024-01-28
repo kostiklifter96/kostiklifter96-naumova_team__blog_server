@@ -66,7 +66,6 @@ export const changeClientFromDB = async (
     paymentStatus: number,
 ) => {
     try {
-        // Находим запись по значению в столбце paymentToken
         const record: any = await Client.findOne({
             where: {
                 paymentToken: token,
@@ -74,22 +73,24 @@ export const changeClientFromDB = async (
         });
 
         if (record) {
-            // Обновляем значение в столбце columnName
             record.paymentStatus = paymentStatus;
 
-            // Сохраняем изменения
             await record.save();
 
-            console.log("Значение столбца успешно изменено.");
             await sendLinkPrivateGroup({
                 email: record.email,
                 name: record.name,
             });
+
+            console.log("Значение столбца успешно изменено.");
+            return true;
         } else {
             console.error("Запись не найдена.");
+            return false;
         }
     } catch (error) {
         console.error("Ошибка при изменении значения столбца:", error);
+        return false;
     }
 };
 

@@ -18,12 +18,10 @@ export const registrationClientOnStream = async (
                 });
             }
 
-            console.log(req.body);
-
             const { name, email, paymentToken, telNumber, telegram } =
                 req.body as INaumovaTeamClient;
 
-            if (name || email || paymentToken || telNumber || telegram) {
+            if (name && email && paymentToken && telNumber) {
                 const clientData: INaumovaTeamClient = {
                     name,
                     email: email.toLowerCase().trim(),

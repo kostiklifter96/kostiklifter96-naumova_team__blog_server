@@ -15,14 +15,17 @@ export const controlPayment = async (req: Request, res: Response) => {
 
             const { token, status } = req.body;
 
-            if (token || status) {
+            if (token && status) {
                 let paymentStatus = 0;
                 if (status === "successful") {
                     paymentStatus = 1;
                 }
 
-                await changeClientFromDB(token, paymentStatus);
-                await sendDB();
+                const result = await changeClientFromDB(token, paymentStatus);
+
+                if (result) {
+                    await sendDB();
+                }
 
                 res.status(200).json({
                     success: true,
