@@ -2,25 +2,36 @@ import { Client } from "../models/Client.js";
 import { sendLinkPrivateGroup } from "../nodemailer/nodemailer.js";
 import { INaumovaTeamClient } from "./../types/types";
 
-// const sqlt3 = sqlite3.verbose();
-// const dbName = "naumova_team.sqlite";
-
-// export const db = new sqlt3.Database(dbName);
-
-// db.serialize(() => {
-//     const sql = `
-//     CREATE TABLE IF NOT EXISTS clients
-//     (id INTEGER PRIMARY KEY,name TEXT ,email TEXT ,textarea TEXT ,uid TEXT ,amount INTEGER, stream INTEGER,paymentStatus INTEGER NOT NULL CHECK (paymentStatus IN (0, 1)))
-//     `;
-
-//     db.run(sql);
-// });
-
 export const getAllClientsFromDB = async () => {
     const result = await Client.findAll();
     return result;
 };
 // getAllClientsFromDB()
+
+async function uniqueUser(str: number) {
+    let clientList: INaumovaTeamClient[] = [];
+    await getAllClientsFromDB().then((res) => {
+        clientList = [].concat(JSON.parse(JSON.stringify(res)));
+    });
+
+    const uniqueUserList = clientList.filter((el) => {
+        // Получаю список всех потоков, в которых участвовал текущий участник
+        const participantStreams = clientList
+            // создаю массив данных всех потоков,где участвовал текущий участник
+            .filter(
+                (item) => item.email.toLowerCase() === el.email.toLowerCase(),
+            )
+            // создаю массив c номерами поток ,где участвовал текущий участник
+            .map((item) => item.stream);
+
+        // Проверяем, участвовал ли участник только в одном потоке и этот поток совпадает с целевым
+        return participantStreams.length === 1 && participantStreams[0] === str;
+    });
+
+    // console.log(uniqueUserList.length);
+}
+
+// uniqueUser(5);
 
 export const getClientFromDB = async (email: string) => {
     const result = await Client.findOne({

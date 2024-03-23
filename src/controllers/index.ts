@@ -5,6 +5,7 @@ export { deleteClient } from "./deleteClient.js";
 export { getAllClients } from "./getAllClients.js";
 export { login } from "./login.js";
 export { payment } from "./payment.js";
+export { promoCode } from "./promoCode.js";
 export { register } from "./register.js";
 export { registrationClientOnStream } from "./registrationClientOnStream.js";
 export { sendEmailFromAdminPanel } from "./sendEmailFromAdminPanel.js";

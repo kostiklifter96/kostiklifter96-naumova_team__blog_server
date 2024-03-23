@@ -2,7 +2,7 @@ import "dotenv/config";
 import { Request, Response } from "express";
 import { getAllClientsFromDB } from "../dataBase/db.js";
 import { sendNewsLetter } from "../nodemailer/nodemailer.js";
-import { INaumovaTeamClient } from "../types/types";
+import { INaumovaTeamClient } from "../types/types.js";
 
 const sendAllMessage = async (dataFromFront: {
     title: string;
@@ -15,7 +15,13 @@ const sendAllMessage = async (dataFromFront: {
     });
 
     const testArr = [
-        { id: 1, name: "Pablo", email: "kostikmail.96@mail.ru", stream: 1 },
+        {
+            id: 1,
+            name: "Pabloerroeer",
+            email: "kostikmaппудil.96@mail.ru",
+            stream: 1,
+        },
+
         { id: 5, name: "Pablo", email: "kostikmail.96@mail.ru", stream: 3 },
         {
             id: 2,
@@ -45,6 +51,8 @@ const sendAllMessage = async (dataFromFront: {
         },
     ];
 
+    console.log("clientListLength: ", clientList.length);
+
     if (dataFromFront.threads === -1) {
         //* уникальные пользователи
         const res = clientList.filter((el, i, array) => {
@@ -55,10 +63,15 @@ const sendAllMessage = async (dataFromFront: {
             );
         });
 
+        console.log("resLength", res.length);
+
         for (let i = 0; i < res.length; i++) {
             const user = { ...res[i], ...dataFromFront };
-
-            await sendNewsLetter(user);
+            try {
+                await sendNewsLetter(user);
+            } catch (error) {
+                console.error(`Ошибка отправки ${user.email}:`, error);
+            }
         }
     } else {
         const res = clientList.filter(
@@ -68,7 +81,12 @@ const sendAllMessage = async (dataFromFront: {
         for (let i = 0; i < res.length; i++) {
             const user = { ...res[i], ...dataFromFront };
 
-            await sendNewsLetter(user);
+            try {
+                await sendNewsLetter(user);
+            } catch (error) {
+                console.error(`Ошибка отправки ${user.email}:`, error);
+                // Можно добавить дополнительную логику обработки ошибок здесь
+            }
         }
     }
 };

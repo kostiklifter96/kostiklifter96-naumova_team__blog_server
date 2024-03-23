@@ -113,19 +113,23 @@ export const sendNewsLetter = async (message: {
     title: string;
     text: string;
 }) => {
-    const newText = message.text.replace(
-        /ИМЯ_ПОЛЬЗОВАТЕЛЯ/g,
-        ` ${message.name} `,
-    );
-    const info = await transporter.sendMail({
-        to: message.email.toLowerCase(),
-        subject: `Naumova Team: ${message.title}!`,
-        // text: message.text,
-        html: ` 
-        ${newText} <br><br>
-        
-        С уважением, команда Naumova Team!`,
-    });
+    try {
+        const newText = message.text.replace(
+            /ИМЯ_ПОЛЬЗОВАТЕЛЯ/g,
+            ` ${message.name} `,
+        );
 
-    console.log("Message sent sendNewsLetter: %s", info.messageId);
+        const info = await transporter.sendMail({
+            to: message.email.toLowerCase(),
+            subject: `Naumova Team: ${message.title}!`,
+            html: `
+                ${newText} <br><br>
+                С уважением, команда Naumova Team!`,
+        });
+
+        console.log(`Отправленно успешно ${message.email}: %s`, info.messageId);
+    } catch (error) {
+        console.error(`Не успешно ${message.email}:`, error);
+        throw new Error("Failed to send email.");
+    }
 };

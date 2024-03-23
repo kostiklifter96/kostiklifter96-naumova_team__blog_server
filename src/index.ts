@@ -9,6 +9,7 @@ import {
     getAllClients,
     login,
     payment,
+    promoCode,
     register,
     registrationClientOnStream,
     sendEmailFromAdminPanel,
@@ -24,6 +25,7 @@ app.use(cors());
 const PORT = process.env.PORT || 4999;
 
 app.get("/getAllClients", getAllClients);
+
 app.post("/register", register);
 app.post("/login", login);
 app.post("/sendEmail", sendEmailFromAdminPanel);
@@ -32,6 +34,8 @@ app.post("/sendNewsLetter", createNewsletter);
 app.post("/payment", isAutf, payment);
 app.post("/registration", registrationClientOnStream);
 app.post("/controlPayment", controlPayment);
+app.post("/promocode", promoCode);
+
 app.delete("/deleteClient", deleteClient);
 app.put("/updateClient", updateClients);
 
