@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Request, Response } from "express";
-import { getClientFromDB } from "../dataBase/db.js";
+import { Client } from "../models/Client.js";
 
 export const promoCode = async (req: Request, res: Response) => {
     try {
@@ -15,7 +15,12 @@ export const promoCode = async (req: Request, res: Response) => {
             }
 
             if (code.toUpperCase() === process.env.PROMOCODE_NAME) {
-                const client = await getClientFromDB(email.trim());
+                const client = await Client.findOne({
+                    where: {
+                        email: email,
+                        paymentStatus: 1,
+                    },
+                });
 
                 if (client) {
                     res.status(200).json({

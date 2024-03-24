@@ -18,10 +18,10 @@ export const registrationClientOnStream = async (
                 });
             }
 
-            const { name, email, paymentToken, telNumber, telegram } =
+            const { name, email, paymentToken, telNumber, telegram, amount } =
                 req.body as INaumovaTeamClient;
 
-            if (name && email && paymentToken && telNumber) {
+            if (name && email && paymentToken && telNumber && amount) {
                 const clientData: INaumovaTeamClient = {
                     name,
                     email: email.toLowerCase().trim(),
@@ -30,7 +30,7 @@ export const registrationClientOnStream = async (
                     telegram,
                     textarea: "",
                     uid: "",
-                    amount: 5900,
+                    amount,
                     stream: +process.env.STREAM_NUMBER!,
                     paymentStatus: 0,
                 };

@@ -33,14 +33,32 @@ async function uniqueUser(str: number) {
 
 // uniqueUser(5);
 
-export const getClientFromDB = async (email: string) => {
-    const result = await Client.findOne({
-        where: { email: email },
-    });
+export const getFindOneClientFromDB = async (email: string) => {
+    try {
+        const client = await Client.findOne({
+            where: { email: email },
+        });
 
-    return result;
+        return client;
+    } catch (error) {
+        console.error("Ошибка при получении клиента из базы данных:", error);
+        throw error;
+    }
 };
 // getClientFromDB();
+
+export const getFindAllClientFromDB = async (email: string) => {
+    try {
+        const clients = await Client.findAll({
+            where: { email: email },
+        });
+
+        return clients;
+    } catch (error) {
+        console.error("Ошибка при получении клиента из базы данных:", error);
+        throw error;
+    }
+};
 
 export const createClientFromDB = async (newClient: INaumovaTeamClient) => {
     const result = await Client.create({
